@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quarkgate.dev/schemas/metering-event.v1.json",
+  "title": "MeteringEvent",
+  "type": "object",
+  "required": ["request_id", "user_id", "provider", "operation", "status", "timestamp"],
+  "properties": {
+    "request_id": { "type": "string", "format": "uuid" },
+    "user_id": { "type": "string", "format": "uuid" },
+    "key_id": { "type": "string", "format": "uuid" },
+    "provider": { "type": "string" },
+    "operation": { "type": "string" },
+    "status": { "type": "string", "enum": ["completed", "failed", "partial"] },
+    "raw_usage": { "type": "object" },
+    "partial": { "type": "boolean", "default": false },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "error": { "type": "string" },
+    "hold_micro": { "type": "integer", "minimum": 0 },
+    "idempotency_key": { "type": "string" },
+    "envelope": { "type": "object" }
+  }
+}

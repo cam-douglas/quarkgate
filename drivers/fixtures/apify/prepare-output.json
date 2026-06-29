@@ -1,0 +1,13 @@
+{
+  "url": "https://api.apify.com/v2/acts/test-actor/runs",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer test",
+    "Content-Type": "application/json"
+  },
+  "body": { "input": {}, "timeout": 300 },
+  "streaming": false,
+  "provider": "apify",
+  "operation": "actor.run",
+  "estimate_micro": 16000000
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quarkgate.dev/schemas/driver-manifest.v1.json",
+  "title": "DriverManifest",
+  "type": "object",
+  "required": ["id", "version", "category", "operations"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "version": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["llm", "scraper", "memory", "execution", "ui"]
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "method", "path"],
+        "properties": {
+          "id": { "type": "string" },
+          "method": { "type": "string" },
+          "path": { "type": "string" },
+          "streaming": { "type": "boolean", "default": false },
+          "compat_paths": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "pricing": { "type": "object" },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "parse_response": { "type": "boolean" },
+        "normalize_usage": { "type": "boolean" },
+        "async_poll": { "type": "boolean" }
+      }
+    }
+  }
+}

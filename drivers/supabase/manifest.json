@@ -1,0 +1,27 @@
+{
+  "id": "supabase",
+  "version": "1.0.0",
+  "category": "memory",
+  "operations": [
+    {
+      "id": "rest.query",
+      "method": "POST",
+      "path": "/rest/query",
+      "streaming": false,
+      "compat_paths": ["/v1/supabase/rest"]
+    },
+    {
+      "id": "rpc.match_documents",
+      "method": "POST",
+      "path": "/rpc/match",
+      "streaming": false,
+      "compat_paths": ["/v1/supabase/rpc/match_documents"]
+    }
+  ],
+  "pricing": { "base_rates_micro_per_unit": { "DB_READ": 10, "DB_WRITE": 50, "VEC_QUERY": 200 } },
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": false
+  }
+}

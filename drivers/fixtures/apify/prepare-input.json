@@ -1,0 +1,9 @@
+{
+  "envelope": {
+    "payload": { "actor_id": "test-actor", "input": {} },
+    "operation": "actor.run",
+    "provider": "apify"
+  },
+  "credential": "test",
+  "baseURL": "https://api.apify.com/v2"
+}

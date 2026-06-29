@@ -1,0 +1,14 @@
+{
+  "url": "https://xyz.supabase.co/rest/v1/docs",
+  "method": "GET",
+  "headers": {
+    "apikey": "test",
+    "Authorization": "Bearer test",
+    "Content-Type": "application/json",
+    "Prefer": "return=representation"
+  },
+  "streaming": false,
+  "provider": "supabase",
+  "operation": "rest.query",
+  "estimate_micro": 100000
+}

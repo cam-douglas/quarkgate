@@ -1,0 +1,9 @@
+{
+  "envelope": {
+    "payload": { "agent_id": "a1", "messages": [] },
+    "operation": "agents.messages.create",
+    "provider": "letta"
+  },
+  "credential": "test",
+  "baseURL": "https://api.letta.com"
+}

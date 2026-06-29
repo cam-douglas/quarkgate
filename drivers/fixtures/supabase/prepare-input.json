@@ -1,0 +1,9 @@
+{
+  "envelope": {
+    "payload": { "table": "docs", "method": "GET" },
+    "operation": "rest.query",
+    "provider": "supabase"
+  },
+  "credential": "test",
+  "baseURL": "https://xyz.supabase.co"
+}

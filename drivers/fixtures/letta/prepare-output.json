@@ -1,0 +1,13 @@
+{
+  "url": "https://api.letta.com/v1/agents/a1/messages",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer test",
+    "Content-Type": "application/json"
+  },
+  "body": { "messages": [], "stream": false },
+  "streaming": false,
+  "provider": "letta",
+  "operation": "agents.messages.create",
+  "estimate_micro": 5000000
+}

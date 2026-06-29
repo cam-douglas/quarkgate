@@ -1,0 +1,9 @@
+{
+  "envelope": {
+    "payload": { "model": "gpt-4", "messages": [] },
+    "operation": "chat.completions.create",
+    "provider": "openrouter"
+  },
+  "credential": "test",
+  "baseURL": "https://openrouter.ai/api/v1"
+}

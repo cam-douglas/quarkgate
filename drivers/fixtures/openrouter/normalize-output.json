@@ -1,0 +1,8 @@
+{
+  "raw_usage": {
+    "cost": 0.01,
+    "total_tokens": 100,
+    "cost_usd": 0.01,
+    "model": "gpt-4"
+  }
+}

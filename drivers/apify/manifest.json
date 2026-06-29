@@ -1,0 +1,20 @@
+{
+  "id": "apify",
+  "version": "1.0.0",
+  "category": "scraper",
+  "operations": [
+    {
+      "id": "actor.run",
+      "method": "POST",
+      "path": "/actor/run",
+      "streaming": false,
+      "compat_paths": ["/v1/apify/actor/run"]
+    }
+  ],
+  "pricing": { "base_rates_micro_per_unit": { "COMPUTE_S": 50000, "API_CALL": 1000 } },
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": true
+  }
+}

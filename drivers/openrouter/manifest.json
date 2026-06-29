@@ -1,0 +1,20 @@
+{
+  "id": "openrouter",
+  "version": "1.0.0",
+  "category": "llm",
+  "operations": [
+    {
+      "id": "chat.completions.create",
+      "method": "POST",
+      "path": "/chat/completions",
+      "streaming": true,
+      "compat_paths": ["/v1/chat/completions"]
+    }
+  ],
+  "pricing": { "passthrough_usd": true },
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": false
+  }
+}

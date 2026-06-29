@@ -1,0 +1,19 @@
+{
+  "id": "template",
+  "version": "1.0.0",
+  "category": "execution",
+  "operations": [
+    {
+      "id": "example.invoke",
+      "method": "POST",
+      "path": "/example",
+      "streaming": false,
+      "compat_paths": []
+    }
+  ],
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": false
+  }
+}

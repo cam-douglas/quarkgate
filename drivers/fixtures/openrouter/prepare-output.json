@@ -1,0 +1,15 @@
+{
+  "url": "https://openrouter.ai/api/v1/chat/completions",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer test",
+    "Content-Type": "application/json",
+    "HTTP-Referer": "https://quarkgate.dev",
+    "X-Title": "QuarkGate"
+  },
+  "body": { "model": "gpt-4", "messages": [] },
+  "streaming": false,
+  "provider": "openrouter",
+  "operation": "chat.completions.create",
+  "estimate_micro": 1421600
+}

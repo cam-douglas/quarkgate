@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quarkgate.dev/schemas/quarkgate-request.v1.json",
+  "title": "QuarkGateRequest",
+  "type": "object",
+  "required": ["quarkgate_version", "provider", "operation", "payload"],
+  "properties": {
+    "quarkgate_version": { "type": "string", "const": "1" },
+    "provider": { "type": "string", "minLength": 1 },
+    "operation": { "type": "string", "minLength": 1 },
+    "payload": { "type": "object" },
+    "metering_hints": {
+      "type": "object",
+      "properties": {
+        "estimated_max_credits": { "type": "integer", "minimum": 0 },
+        "priority": { "type": "string", "enum": ["low", "normal", "high"] }
+      }
+    },
+    "trace_id": { "type": "string" }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "body": "[{\"id\":1},{\"id\":2}]",
+  "headers": { "Content-Range": "0-1/2" },
+  "envelope": { "operation": "rest.query" },
+  "streaming": false
+}

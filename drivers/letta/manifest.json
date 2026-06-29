@@ -1,0 +1,20 @@
+{
+  "id": "letta",
+  "version": "1.0.0",
+  "category": "memory",
+  "operations": [
+    {
+      "id": "agents.messages.create",
+      "method": "POST",
+      "path": "/agents/messages",
+      "streaming": true,
+      "compat_paths": ["/v1/letta/agents/messages"]
+    }
+  ],
+  "pricing": { "base_rates_micro_per_unit": { "API_CALL": 1000, "TOK_OUTPUT": 900 } },
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": false
+  }
+}

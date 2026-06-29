@@ -1,0 +1,10 @@
+{
+  "name": "quarkgate-drivers",
+  "private": true,
+  "version": "0.1.0",
+  "description": "QuarkGate provider drivers",
+  "scripts": {
+    "test:drivers": "node drivers/sdk/test-harness.js",
+    "validate:manifests": "node drivers/sdk/validate-manifests.js"
+  }
+}
