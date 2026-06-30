@@ -115,8 +115,13 @@
 
 ## Step 5 — Production readiness (before any prod traffic)
 
-- [ ] Replace dev-only **`VAULT_KEK`** with production key material — **owner on DO deploy**
-- [ ] Set production **`DATABASE_URL`**, **`REDIS_URL`**, **`LISTEN_ADDR`** — **owner on DO deploy**
+- [x] Replace dev-only **`VAULT_KEK`** with production key material — set 2026-06-30 (local + VPS via deploy)
+- [x] Set production **`DATABASE_URL`**, **`REDIS_URL`**, **`LISTEN_ADDR`** on VPS (Supabase via IPv6, `:8080`)
+- [x] DO droplet: **`170.64.182.193`** (id `581245957`, `s-2vcpu-4gb-amd`, syd1) — QuarkGate gateway + ledger-worker **active**
+- [x] DO cloud firewall `quarkgate-prod` (22/80/443)
+- [x] IPv6 configured for Supabase Postgres (direct `db.*.supabase.co` is IPv6-only)
+- [x] Full Compose production profile — task-service, frontend, traefik healthy on VPS (2026-06-30)
+- [x] Production **`VAULT_KEK`** — generated and applied (local `quarkgate/.env` + VPS); **back up in password manager**
 - [x] Confirm **D3** prod policy documented in runbook — [operator-runbook.md](runbooks/operator-runbook.md)
 - [x] Confirm **D7**: `402 top_up_url` omit until dashboard
 - [x] Operator runbook acknowledged (DLQ replay, reconcile-user) — [operator-runbook.md](runbooks/operator-runbook.md)

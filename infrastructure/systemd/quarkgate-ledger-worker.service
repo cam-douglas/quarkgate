@@ -1,0 +1,17 @@
+[Unit]
+Description=QuarkGate ledger metering worker
+After=network-online.target docker.service quarkgate-gateway.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/quarkOS/quarkgate
+EnvironmentFile=/opt/quarkOS/quarkgate/.env
+ExecStart=/opt/quarkOS/quarkgate/bin/ledger-worker
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
