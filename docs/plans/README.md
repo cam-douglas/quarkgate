@@ -12,4 +12,6 @@ Phased engineering plans for building QuarkGate. Each phase has a dedicated plan
 
 **Convention:** `phase_<N>_<topic>.plan.md` — no hash suffixes.
 
+**Credential policy:** [ADR-036 BYOK](adr/036-byok-credential-model.md) — interim product goal until provider partnerships.
+
 **Status:** Phase 1–2 and Phase 4 implemented; Phase 3 and Phase 5 plans ready — **complete Phase 3 before Phase 5 sign-off**.

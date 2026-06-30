@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuarkGate Dev Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a2332;
+      --border: #2d3a4f;
+      --text: #e7ecf3;
+      --muted: #8b9cb3;
+      --up: #3dd68c;
+      --issue: #f5a623;
+      --down: #ff6b6b;
+      --skipped: #6c7a89;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    h1 { margin: 0; font-size: 1.35rem; font-weight: 600; }
+    .badge {
+      font-size: 0.75rem;
+      background: #243044;
+      color: var(--muted);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+    .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    main { padding: 1.5rem 2rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .summary {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      min-width: 100px;
+    }
+    .stat strong { display: block; font-size: 1.5rem; }
+    .stat span { color: var(--muted); font-size: 0.85rem; }
+    .stat.up strong { color: var(--up); }
+    .stat.issue strong { color: var(--issue); }
+    .stat.down strong { color: var(--down); }
+    .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    section { margin-bottom: 2rem; }
+    h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.75rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td { padding: 0.65rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 500; font-size: 0.8rem; }
+    tr:last-child td { border-bottom: none; }
+    tr.row-down { background: rgba(255,107,107,0.06); }
+    tr.row-issue { background: rgba(245,166,35,0.06); }
+    .pill {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .pill.up { background: rgba(61,214,140,0.15); color: var(--up); }
+    .pill.issue { background: rgba(245,166,35,0.15); color: var(--issue); }
+    .pill.down { background: rgba(255,107,107,0.15); color: var(--down); }
+    .pill.skipped { background: rgba(108,122,137,0.15); color: var(--skipped); }
+    .detail { color: var(--muted); font-size: 0.85rem; max-width: 420px; word-break: break-word; }
+    .env-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.5rem;
+    }
+    .env-item {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+    }
+    .env-item code { color: #9ecbff; word-break: break-all; }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    button:hover { background: #1d4ed8; }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    button.secondary { background: #374151; }
+    button.secondary:hover { background: #4b5563; }
+    #test-status { margin-top: 0.75rem; font-size: 0.9rem; color: var(--muted); }
+    #test-status.running { color: #9ecbff; }
+    #test-status.error { color: var(--down); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>QuarkGate Dev Dashboard</h1>
+      <span class="badge">local · dev only · not for production</span>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="run-test-btn">Run API test</button>
+      <button type="button" class="secondary" onclick="location.reload()">Reload page</button>
+    </div>
+  </header>
+  <main>
+    <div class="summary" id="summary">
+      <div class="stat up"><strong id="cnt-up">{{ summary.up }}</strong><span>Up</span></div>
+      <div class="stat issue"><strong id="cnt-issue">{{ summary.issue }}</strong><span>Issue</span></div>
+      <div class="stat down"><strong id="cnt-down">{{ summary.down }}</strong><span>Down</span></div>
+      <div class="stat"><strong id="cnt-skipped">{{ summary.skipped }}</strong><span>Skipped</span></div>
+    </div>
+    <p class="meta" id="tested-at">Last test: {{ tested_at }}</p>
+    <div id="test-status"></div>
+
+    <section>
+      <h2>Environment</h2>
+      <div class="env-grid">
+        {% for k, v in env.items() %}
+        <div class="env-item"><strong>{{ k }}</strong><br/><code>{{ v }}</code></div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2>Services</h2>
+      <table>
+        <thead>
+          <tr><th>Service</th><th>Category</th><th>Health</th><th>Latency</th><th>Detail</th></tr>
+        </thead>
+        <tbody id="probe-rows">
+          {% for p in probes %}
+          <tr class="row-{{ p.health }}" data-id="{{ p.id }}">
+            <td>{{ p.name }}</td>
+            <td>{{ p.category }}</td>
+            <td><span class="pill {{ p.health }}">{{ p.health }}</span></td>
+            <td class="latency">{% if p.latency_ms %}{{ "%.0f"|format(p.latency_ms) }} ms{% else %}—{% endif %}</td>
+            <td class="detail">{{ p.detail }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    const btn = document.getElementById("run-test-btn");
+    const statusEl = document.getElementById("test-status");
+    const tbody = document.getElementById("probe-rows");
+
+    function rowClass(health) {
+      if (health === "down") return "row-down";
+      if (health === "issue") return "row-issue";
+      return "";
+    }
+
+    function renderResults(data) {
+      document.getElementById("cnt-up").textContent = data.summary.up;
+      document.getElementById("cnt-issue").textContent = data.summary.issue;
+      document.getElementById("cnt-down").textContent = data.summary.down;
+      document.getElementById("cnt-skipped").textContent = data.summary.skipped;
+      document.getElementById("tested-at").textContent = "Last test: " + data.tested_at;
+      tbody.innerHTML = data.probes.map(p => `
+        <tr class="${rowClass(p.health)}" data-id="${p.id}">
+          <td>${p.name}</td>
+          <td>${p.category}</td>
+          <td><span class="pill ${p.health}">${p.health}</span></td>
+          <td class="latency">${p.latency_ms ? Math.round(p.latency_ms) + " ms" : "—"}</td>
+          <td class="detail">${p.detail || ""}</td>
+        </tr>`).join("");
+    }
+
+    const apiBase = window.location.origin;
+    const fetchOpts = { headers: { "Accept": "application/json" } };
+
+    async function runApiTest() {
+      btn.disabled = true;
+      statusEl.textContent = "Checking dev gateway…";
+      statusEl.className = "running";
+      try {
+        const healthPath = apiBase.includes(":8095") ? "/healthz" : "/gateway/healthz";
+        const ping = await fetch(`${apiBase}${healthPath}`, { ...fetchOpts, signal: AbortSignal.timeout(5000) });
+        if (!ping.ok) throw new Error("Gateway not ready (HTTP " + ping.status + ")");
+        statusEl.textContent = "Running API checks against all services…";
+        const resp = await fetch(`${apiBase}/api/test-all`, {
+          method: "POST",
+          ...fetchOpts,
+          signal: AbortSignal.timeout(120000),
+        });
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const data = await resp.json();
+        renderResults(data);
+        const bad = data.summary.down + data.summary.issue;
+        statusEl.textContent = bad
+          ? `Complete — ${data.summary.up} up, ${data.summary.issue} issue, ${data.summary.down} down`
+          : `Complete — all ${data.summary.up} services up`;
+        statusEl.className = "";
+      } catch (err) {
+        let hint = "";
+        if (err.name === "TimeoutError") {
+          hint = " (request timed out — services may still be starting; wait ~30s and retry)";
+        } else if (err.message === "Failed to fetch" || err.name === "TypeError") {
+          hint = apiBase.includes(":8095")
+            ? " (legacy :8095 dashboard — use unified gateway at http://127.0.0.1:8090/ and run: cd quarkgate && make dev-up)"
+            : " (is the dev gateway running on :8090? run: cd quarkgate && make dev-up)";
+        }
+        statusEl.textContent = "Test failed: " + err.message + hint;
+        statusEl.className = "error";
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    btn.addEventListener("click", runApiTest);
+  </script>
+</body>
+</html>

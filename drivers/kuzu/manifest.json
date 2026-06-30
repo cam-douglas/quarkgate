@@ -1,0 +1,28 @@
+{
+  "id": "kuzu",
+  "version": "1.0.0",
+  "category": "memory",
+  "runtime": "python",
+  "operations": [
+    {
+      "id": "graph.query",
+      "method": "GET",
+      "path": "/graph/query",
+      "streaming": false,
+      "compat_paths": ["/v1/kuzu/graph/query"]
+    },
+    {
+      "id": "graph.health",
+      "method": "GET",
+      "path": "/health",
+      "streaming": false,
+      "compat_paths": ["/v1/kuzu/health"]
+    }
+  ],
+  "pricing": { "base_rates_micro_per_unit": { "API_CALL": 0 } },
+  "capabilities": {
+    "parse_response": true,
+    "normalize_usage": true,
+    "async_poll": false
+  }
+}

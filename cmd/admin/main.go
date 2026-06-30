@@ -59,13 +59,6 @@ func main() {
 
 	switch os.Args[1] {
 	case "migrate":
-		if err := db.Migrate(ctx, pool,
-			"migrations/001_initial.sql",
-			"migrations/002_seed_providers.sql",
-			"migrations/003_usage_ledger_links.sql",
-		); err != nil {
-			log.Fatal(err)
-		}
 		fmt.Println("migrations applied")
 	case "create-user":
 		if len(os.Args) < 3 {

@@ -2,11 +2,11 @@
 bin/
 *.exe
 
-# Environment and secrets
+# Environment and secrets — never commit real values
+# Track only .env.example; all other .env* files (including .env) stay local.
 .env
 .env.*
 !.env.example
-.env.e2e
 *.pem
 credentials.json
 **/uploads/
@@ -16,6 +16,19 @@ credentials.json
 
 # Dependencies
 node_modules/
+
+# Local tool checkouts (see tools/repos/README.md)
+/tools/repos/*/
+!/tools/repos/README.md
+/tools/bin/*
+!/tools/bin/.gitkeep
+
+# Kùzu bridge venv + embedded DB files
+/services/*/.venv/
+**/__pycache__/
+*.egg-info/
+/data/
+/services/kuzu-bridge/data/
 
 # OS
 .DS_Store

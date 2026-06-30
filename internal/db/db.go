@@ -20,13 +20,30 @@ func Connect(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {
 }
 
 func Migrate(ctx context.Context, pool *pgxpool.Pool, paths ...string) error {
+	if _, err := pool.Exec(ctx, `
+		CREATE TABLE IF NOT EXISTS schema_migrations (
+			filename TEXT PRIMARY KEY,
+			applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+		)`); err != nil {
+		return fmt.Errorf("migrate schema_migrations: %w", err)
+	}
 	for _, path := range paths {
+		var exists bool
+		if err := pool.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE filename = $1)`, path).Scan(&exists); err != nil {
+			return fmt.Errorf("migrate check %s: %w", path, err)
+		}
+		if exists {
+			continue
+		}
 		data, err := readMigration(path)
 		if err != nil {
 			return err
 		}
 		if _, err := pool.Exec(ctx, string(data)); err != nil {
 			return fmt.Errorf("migrate %s: %w", path, err)
+		}
+		if _, err := pool.Exec(ctx, `INSERT INTO schema_migrations (filename) VALUES ($1)`, path); err != nil {
+			return fmt.Errorf("migrate record %s: %w", path, err)
 		}
 	}
 	return nil

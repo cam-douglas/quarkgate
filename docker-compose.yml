@@ -25,5 +25,18 @@ services:
       timeout: 5s
       retries: 5
 
+  kuzu-bridge:
+    build:
+      context: .
+      dockerfile: services/kuzu-bridge/Dockerfile
+    ports:
+      - "8093:8093"
+    environment:
+      KUZU_ENABLED: "true"
+      KUZU_DB_PATH: /data/kuzu/memory_graph.kuzu
+    volumes:
+      - kuzudata:/data/kuzu
+
 volumes:
   pgdata:
+  kuzudata:

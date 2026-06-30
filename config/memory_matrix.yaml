@@ -1,0 +1,6 @@
+promotion_enabled: false
+default_classification: INTERNAL
+confidence_threshold: 0.6
+dedup_cosine_threshold: 0.92
+embed_model: openrouter/text-embedding-3-small
+embed_dimensions: 384

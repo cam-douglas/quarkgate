@@ -1,0 +1,12 @@
+schema_version: 1
+promotion_enabled: false
+letta_enabled: true
+zep_mode: cloud
+lance_enabled: true
+kuzu_enabled: true
+clip_enabled: false
+anytype_enabled: true
+sleep_cycle_enabled: true
+langgraph_skills_enabled: true
+hindsight_enabled: true
+hybrid_alpha: 0.7

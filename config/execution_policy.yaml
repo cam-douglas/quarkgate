@@ -1,0 +1,29 @@
+# WP3 execution policy — live (e2b production path)
+
+tiers:
+  1:
+    network_mode: none
+    description: No network egress
+  2:
+    network_mode: internal
+    description: Internal bridge only (no outbound internet)
+
+allowed_commands:
+  - echo
+  - sleep
+  - cat
+  - python3
+  - node
+
+resource_limits:
+  cpus: 0.5
+  memory: 512m
+  pids_limit: 100
+
+mount_rules:
+  scratch_prefix: ./scratch
+  forbidden_host_paths:
+    - /var/run/docker.sock
+    - /etc
+    - /proc
+    - /sys

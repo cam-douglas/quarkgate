@@ -24,16 +24,14 @@ export QUARKGATE_KEY=qg_live_...
 node examples/swarm-minimal/orchestrator.js
 ```
 
-## Live E2E (real providers)
+## Live providers
 
-Create `.env.e2e` (never commit):
+Load env from `quarkgate/.env` (see [`.env.example`](../../.env.example)):
 
 ```bash
-QUARKGATE_URL=http://localhost:8080
-QUARKGATE_KEY=qg_test_...
-OPENROUTER_API_KEY=...
-APIFY_TOKEN=...
-LETTA_AGENT_ID=...
+cp .env.example .env
+# fill OPENROUTER_API_KEY, APIFY_TOKEN, LETTA_*, SUPABASE_*
+set -a && source .env && set +a
 ```
 
 ```bash

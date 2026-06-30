@@ -27,3 +27,9 @@ Pessimistic hold at request start; async worker captures actual usage and releas
 **Status:** Accepted
 
 One-shot `node host.js` per IPC call; process pool deferred.
+
+# ADR-036: BYOK credential model (interim)
+
+**Status:** Accepted
+
+Bring-your-own-key until provider partnerships. See [036-byok-credential-model.md](036-byok-credential-model.md).

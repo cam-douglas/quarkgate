@@ -2,7 +2,9 @@
 
 Unified reverse proxy, authentication wrapper, and micro-billing gateway for agentic AI infrastructure.
 
-One API key. One credit balance. Route to OpenRouter, Apify, Letta, Supabase, and more.
+**Interim product goal (ADR-036):** **BYOK** — tenants use their own provider keys; POC = sole operator until provider partnerships enable resale.
+
+One API key. Metering and routing. Provider credentials are **bring-your-own-key**, not operator master-key resale (deferred).
 
 ## Quick start
 
@@ -57,6 +59,19 @@ Bearer: `Authorization: Bearer qg_live_...`
 | `CREDIT_USD_MICRO` | `10000` |
 | `STREAM_IDLE_SEC` | `30` |
 | `STREAM_MAX_SEC` | `1800` |
+
+Copy `.env.example` to `.env` for BYOK POC credentials. See `docs/adr/036-byok-credential-model.md`.
+
+Memory providers (WP11) mirror root `quarkOS/.env` — including `KUZU_*`, `LANCEDB_*`, `ZEP_*`, etc.
+
+## Memory — Kùzu graph bridge
+
+```bash
+make setup-kuzu      # clone already at tools/repos/kuzu; init embedded DB
+make kuzu-bridge     # :8093 when KUZU_ENABLED=true
+```
+
+See `services/kuzu-bridge/README.md` and `tools/repos/README.md`.
 
 ## Drivers
 
