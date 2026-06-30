@@ -123,6 +123,18 @@ bootstrap-vault:
 test-gateway:
 	bash scripts/test-dev-gateway.sh --strict
 
+load-reconciliation:
+	set -a && [ -f .env ] && . ./.env && set +a; node scripts/load-reconciliation-test.js
+
+streaming-p95:
+	set -a && [ -f .env ] && . ./.env && set +a; node scripts/streaming-p95-benchmark.js
+
+prepare-production:
+	bash scripts/prepare-production.sh
+
+build-e2b-playwright:
+	bash scripts/build-e2b-playwright-template.sh
+
 
 memory-local:
 	bash scripts/start-memory-local.sh

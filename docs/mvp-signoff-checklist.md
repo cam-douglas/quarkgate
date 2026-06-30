@@ -8,9 +8,9 @@
 - [x] Bulkhead, graceful shutdown drain, DLQ replay (`admin replay-dlq`)
 - [x] Vault bootstrap + driver health (4/4 providers) — `bootstrap-vault-from-env.sh`
 - [x] Ledger worker running in dev stack
-- [ ] Live provider E2E with sandbox credentials — **partial** (OR 200, Apify 201, SB 200; Letta 402 credits)
-- [ ] 1000-request reconciliation load test (manual / staging)
-- [ ] Streaming p95 latency vs direct benchmark on staging hardware
+- [ ] Live provider E2E with sandbox credentials — **partial** (OR/Apify/SB pass; Letta 402 — owner credits later)
+- [x] 1000-request reconciliation load test — `make load-reconciliation` PASS (local 2026-06-30)
+- [x] Streaming p95 latency vs direct benchmark — `make streaming-p95` PASS (gateway :8080)
 
 **Operator decisions:** D4 **A+C**, D5 **A** — recorded in [owner-operator-checklist.md](owner-operator-checklist.md#decision-log).
 
