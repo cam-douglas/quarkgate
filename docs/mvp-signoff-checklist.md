@@ -8,7 +8,7 @@
 - [x] Bulkhead, graceful shutdown drain, DLQ replay (`admin replay-dlq`)
 - [x] Vault bootstrap + driver health (4/4 providers) — `bootstrap-vault-from-env.sh`
 - [x] Ledger worker running in dev stack
-- [ ] Live provider E2E with sandbox credentials — **partial** (OR 200, Apify 201; SB 404, Letta 402 remain)
+- [ ] Live provider E2E with sandbox credentials — **partial** (OR 200, Apify 201, SB 200; Letta 402 credits)
 - [ ] 1000-request reconciliation load test (manual / staging)
 - [ ] Streaming p95 latency vs direct benchmark on staging hardware
 

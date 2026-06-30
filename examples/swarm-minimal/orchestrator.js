@@ -52,7 +52,7 @@ async function main() {
     max_tokens: 16,
   });
   const chatText = await chat.text();
-  if (assertOk('openrouter', chat.status, [200, 401, 402, 502, 503])) passed++;
+  if (assertOk('openrouter', chat.status, strict ? [200] : [200, 401, 402, 502, 503])) passed++;
   if (strict && chat.status === 200) {
     const j = JSON.parse(chatText);
     if (!j.choices?.[0]?.message?.content) {
@@ -65,15 +65,15 @@ async function main() {
     operation: 'actor.run',
     payload: { actor_id: config.apifyActorId, input: {} },
   }, 'apify');
-  if (assertOk('apify', apify.status, [200, 201, 202, 401, 402, 502, 503])) passed++;
+  if (assertOk('apify', apify.status, strict ? [200, 201, 202] : [200, 201, 202, 401, 402, 502, 503])) passed++;
   await apify.text();
 
   console.log('3. Supabase vector RPC envelope');
   const sb = await qg(null, {
     operation: 'rpc.match_documents',
-    payload: { query_embedding: [0.1, 0.2], match_count: 3 },
+    payload: { query_embedding: config.stubEmbedding(), match_count: 3 },
   }, 'supabase');
-  if (assertOk('supabase', sb.status, [200, 401, 402, 404, 502, 503])) passed++;
+  if (assertOk('supabase', sb.status, strict ? [200] : [200, 401, 402, 404, 502, 503])) passed++;
   await sb.text();
 
   console.log('4. Letta envelope');
@@ -81,7 +81,7 @@ async function main() {
     operation: 'agents.messages.create',
     payload: { agent_id: config.lettaAgentId, messages: [{ role: 'user', content: 'hi' }] },
   }, 'letta');
-  if (assertOk('letta', letta.status, [200, 401, 402, 404, 502, 503])) passed++;
+  if (assertOk('letta', letta.status, strict ? [200, 201] : [200, 201, 401, 402, 404, 502, 503])) passed++;
   await letta.text();
 
   console.log(`Done — ${passed}/4 steps returned acceptable status`);

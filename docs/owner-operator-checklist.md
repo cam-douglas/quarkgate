@@ -47,7 +47,7 @@
   - [x] `LETTA_ENABLED`, `HINDSIGHT_*`, `AGENTS_MMD_DATA`
   - [ ] `GRAPHITI_BASE_URL` + `ZEP_MODE=local` for fallback — **deferred** (Zep Cloud active)
   - [x] `KUZU_*`, `LANCE_*`, `LANCEDB_URI`
-  - [ ] `CLIP_*`, `BROWSER_ACTORS_ENABLED` — **disabled** by choice
+  - [x] `CLIP_*`, `BROWSER_ACTORS_ENABLED` — enabled in dev (Playwright template pending)
   - [x] `ANYTYPE_*`, `LANGGRAPH_SKILLS_ENABLED`, `SLEEP_CYCLE_*`, `MEMORY_SLEEP_WORKER_URL`
   - [x] Service URLs: `EMBED_WORKER_URL`, `ZEP_INGEST_WORKER_URL`, `LETTA_BRIDGE_URL`
 
@@ -96,9 +96,9 @@
 - [x] Start gateway and worker (unified dev gateway + `ledger-worker`)
 - [x] Resolve port conflict (task-service `:8081`, gateway `:8080`, unified `:8090`)
 - [x] Run orchestrator in **strict** mode (`E2E_STRICT=1`)
-- [ ] All four providers return **200** — **partial:** OpenRouter 200, Apify 201, Supabase 404, Letta 402
-- [ ] Confirm `usage_logs` captured (not pending) after ledger worker processes stream
-- [ ] Update [mvp-signoff-checklist.md](mvp-signoff-checklist.md): Live provider E2E ✓
+- [ ] All four providers return **200** — **partial:** OpenRouter 200, Apify 201, Supabase 200 ✓, Letta **402** (Letta Cloud credits)
+- [x] Confirm `usage_logs` captured (not pending) after ledger worker processes stream — verified 2026-06-30
+- [ ] Update [mvp-signoff-checklist.md](mvp-signoff-checklist.md): Live provider E2E ✓ (blocked on Letta credits)
 - [ ] Update milestone tracker when all four return 200
 
 ---
@@ -130,7 +130,7 @@
 - [x] `packages/provider-adapters` QuarkGate client + `get_llm_adapter()`
 - [ ] Align WP11 Letta/Zep cost reservation with QuarkGate holds
 - [ ] Write quarkOS ADR: production topology (DO + QuarkGate edge)
-- [ ] Bump `quarkgate/` submodule pin if using submodule workflow
+- [x] Bump `quarkgate/` submodule pin if using submodule workflow — pending parent repo commit
 
 ---
 
@@ -173,7 +173,9 @@ Ledger uses same Supabase Postgres project in dev (no separate `:5433` Docker).
 
 | Run | Date | Environment | Result | Notes |
 |-----|------|-------------|--------|-------|
-| Live E2E orchestrator (strict) | 2026-06-30 | local | partial | OR 200, Apify 201, SB 404, Letta 402 |
+| Live E2E orchestrator (strict) | 2026-06-30 | local | partial | OR 200, Apify 201, SB 200, Letta 402 |
+| Supabase match_documents RPC | 2026-06-30 | Supabase | pass | migration `20250630143000_quarkgate_match_documents.sql` |
+| usage_logs metering | 2026-06-30 | local | pass | completed rows for OR/Apify/SB; Letta failed+ captured |
 | Vault bootstrap + driver health | 2026-06-30 | local | pass | 4/4 driver-health ok |
 | Dev gateway API test | 2026-06-30 | local | pass | 27/27 probes up |
 | 1000-request reconciliation | | staging | | |
@@ -189,4 +191,4 @@ See [decision-log-suggested.md](decision-log-suggested.md) for rationale. Choice
 
 ## After Step 1
 
-Proceed to close Step 3 partial E2E (Letta 402, Supabase RPC) and Step 4 load/latency when ready for staging sign-off.
+Proceed to close Step 3 partial E2E (**Letta 402 only** — add Letta Cloud credits) and Step 4 load/latency when ready for staging sign-off.
